@@ -25,7 +25,7 @@ export default async function Table() {
                                     Date
                                 </th>
                                 <th scope="col" className="px-3 py-5 font-medium">
-                                    Action
+                                    Actions
                                 </th>
                             </tr>
                         </thead>
