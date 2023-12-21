@@ -1,8 +1,13 @@
+'use Client'
 import {EditBlog, DeleteBlog} from '@/app/ui/blog/actionbutton'
-import {getData} from '@/app/api/blog'
+import {getData, countData} from '@/app/api/blog'
 
-export default async function Table() {
-    const data = await getData();
+
+export default async function Table(){
+
+
+    const {data} = await getData();
+
 
     return (
 
@@ -12,7 +17,10 @@ export default async function Table() {
                     <table className="hidden min-w-full text-gray-900 md:table">
                         <thead className="rounded-lg text-left text-sm font-normal">
                             <tr>
-                                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                                <th scope="col" className="px-4 py-5 font-medium sm:pl-6 justify-center flex">
+                                    No
+                                </th>
+                                <th scope="col" className="px-3 py-5 font-medium">
                                     Title
                                 </th>
                                 <th scope="col" className="px-3 py-5 font-medium">
@@ -30,26 +38,38 @@ export default async function Table() {
                             </tr>
                         </thead>
                         <tbody className="bg-white">
-                            <tr>
-                                <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                    {data.data[0].attributes.title}
-                                </td>
-                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {data.data[0].attributes.genres.data[0].attributes.title}
-                                </td>
-                                <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                    {data.data[0].attributes.author}
-                                </td>
-                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {data.data[0].attributes.date}
-                                </td>
-                                <td>
-                                    <div className="flex justify-start gap-2">
-                                        <EditBlog />
-                                        <DeleteBlog />
-                                    </div>
-                                </td>
-                            </tr>
+                            {data?.map((blog: any, index: number) => (
+                                <tr key={blog.id}>
+                                    <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900 justify-center flex">
+                                        {index + 1}
+                                    </td>
+                                    <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
+                                        {blog.attributes.title}
+                                    </td>
+                                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {blog.attributes.genres.data?.reduce((acc: string, step: any) => {
+                                            if (acc !== '') {
+                                                acc = `${acc}, ${step.attributes.title}`
+                                            }else{
+                                                acc = step.attributes.title
+                                            }
+                                            return acc
+                                        }, '')}
+                                    </td>
+                                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {blog.attributes.author}
+                                    </td>
+                                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {blog.attributes.date}
+                                    </td>
+                                    <td>
+                                        <div className="flex justify-start gap-2">
+                                            <EditBlog />
+                                            <DeleteBlog />
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

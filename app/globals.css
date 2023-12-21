@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer mantine, mantine-datatable;
+
 
 input[type='number'] {
   -moz-appearance: textfield;

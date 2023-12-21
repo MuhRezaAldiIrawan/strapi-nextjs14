@@ -3,6 +3,8 @@ import Search from '@/app/ui/blog/search'
 import Button from '@/app/ui/blog/button'
 
 
+
+
 export default function Page() {
     return (
         <div>
@@ -14,6 +16,7 @@ export default function Page() {
                 </div>
             </div>
             <Table />
+            
         </div>
     )
 }
