@@ -6,14 +6,11 @@ export async function getData(
 
     try {
         const res = await fetch('http://localhost:1337/api/blogs?populate=*')
-
         const result = res.json()
-
         if (!res.ok) {
 
             throw new Error('Failed to fetch data')
         }
-
         return result
     } catch (error) {
         console.error('failed Fatche data:', error);
