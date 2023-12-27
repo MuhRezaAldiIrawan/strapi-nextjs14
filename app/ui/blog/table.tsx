@@ -1,14 +1,13 @@
-'use Client'
-import {EditBlog, DeleteBlog} from '@/app/ui/blog/actionbutton'
-import {getData, countData} from '@/app/api/blog'
+import { EditBlog, DeleteBlog } from '@/app/ui/blog/actionbutton'
+// import { getData } from '@/app/api/blog'
+// const { data } = await getData();
 
-
-export default async function Table(){
-
-
-    const {data} = await getData();
-
-
+export default async function Table({
+    blogs,
+}: {
+    currentPage: number;
+    blogs: object[];
+}) {
     return (
 
         <div className="mt-6 flow-root">
@@ -38,33 +37,33 @@ export default async function Table(){
                             </tr>
                         </thead>
                         <tbody className="bg-white">
-                            {data?.map((blog: any, index: number) => (
+                            {blogs?.map((blog: any, index: number) => (
                                 <tr key={blog.id}>
                                     <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900 justify-center flex">
                                         {index + 1}
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                                        {blog.attributes.title}
+                                        {blog.title}
                                     </td>
                                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {blog.attributes.genres.data?.reduce((acc: string, step: any) => {
+                                        {blog.genres.reduce((acc: string, step: any) => {
                                             if (acc !== '') {
-                                                acc = `${acc}, ${step.attributes.title}`
-                                            }else{
-                                                acc = step.attributes.title
+                                                acc = `${acc}, ${step.title}`
+                                            } else {
+                                                acc = step.title
                                             }
                                             return acc
                                         }, '')}
                                     </td>
                                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {blog.attributes.author}
+                                        {blog.author}
                                     </td>
                                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        {blog.attributes.date}
+                                        {blog.date}
                                     </td>
                                     <td>
                                         <div className="flex justify-start gap-2">
-                                            <EditBlog />
+                                            <EditBlog id={blog.id}/>
                                             <DeleteBlog />
                                         </div>
                                     </td>
